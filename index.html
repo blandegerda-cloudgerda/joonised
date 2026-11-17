@@ -2,40 +2,58 @@
 <!doctype html>
 <html>
   <head>
-    <title>Kohvitass</title>
+    <title>Kohvitassid funktsiooniga</title>
 
     <script>
-      function joonista(){
-        let g = tahvel.getContext("2d");
+      let g;
+
+      // Funktsioon kohvitassi joonistamiseks
+      // x, y - kohvitassi asukoht
+      // suurus - kohvitassi suurus
+      // varv - kohvitassi värv
+
+      function kohvitass(x, y, suurus, varv){
 
         // Tassi keha
-        g.fillStyle = "brown";
-        g.fillRect(120, 130, 150, 120);
+        g.fillStyle = varv;
+        g.fillRect(x, y, 150 * suurus, 120 * suurus);
 
         // Tassi sang
         g.beginPath();
-        g.arc(270, 190, 35, -Math.PI / 2, Math.PI / 2);
+        g.arc(x + 150 * suurus, y + 60 * suurus,
+              35 * suurus, -Math.PI / 2, Math.PI / 2);
         g.stroke();
 
         // Kohvi pind
         g.fillStyle = "saddlebrown";
         g.beginPath();
-        g.arc(195, 130, 75, 0, Math.PI);
+        g.arc(x + 75 * suurus, y, 75 * suurus, 0, Math.PI);
         g.fill();
 
         // Tassi alumine joon
         g.beginPath();
-        g.moveTo(120, 250);
-        g.lineTo(270, 250);
+        g.moveTo(x, y + 120 * suurus);
+        g.lineTo(x + 150 * suurus, y + 120 * suurus);
         g.stroke();
+      }
+
+      function joonista(){
+
+        g = tahvel.getContext("2d");
+
+	        // Teeme kolm erinevat kohvitassi
+        kohvitass(30, 100, 0.6, "pink");
+        kohvitass(130, 80, 0.8, "lightblue");
+        kohvitass(260, 120, 0.5, "orange");
+
       }
     </script>
   </head>
 
   <body onload="joonista()">
-    <h1>Kohvitass</h1>
+    <h1>Minu kohvitassid</h1>
 
-    <canvas id="tahvel" width="400" height="300">
+    <canvas id="tahvel" width="500" height="300">
     </canvas>
   </body>
 </html>
