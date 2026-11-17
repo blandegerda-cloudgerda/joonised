@@ -1,0 +1,24 @@
+
+[
+    {
+        "x": 30,
+        "y": 150,
+        "suurus": 0.6,
+        "varv": "pink",
+        "aurudeArv": 2
+    },
+    {
+        "x": 220,
+        "y": 120,
+        "suurus": 0.8,
+        "varv": "lightblue",
+        "aurudeArv": 3
+    },
+    {
+        "x": 430,
+        "y": 170,
+        "suurus": 0.5,
+        "varv": "orange",
+        "aurudeArv": 4
+    }
+]
