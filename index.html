@@ -1,8 +1,7 @@
-
 <!doctype html>
 <html>
   <head>
-    <title>Kohvitassid funktsiooniga</title>
+    <title>Kohvitassid auruga</title>
 
     <script>
       let g;
@@ -11,8 +10,9 @@
       // x, y - kohvitassi asukoht
       // suurus - kohvitassi suurus
       // varv - kohvitassi värv
+      // aurudeArv - aurujuttude arv
 
-      function kohvitass(x, y, suurus, varv){
+      function kohvitass(x, y, suurus, varv, aurudeArv){
 
         // Tassi keha
         g.fillStyle = varv;
@@ -35,25 +35,38 @@
         g.moveTo(x, y + 120 * suurus);
         g.lineTo(x + 150 * suurus, y + 120 * suurus);
         g.stroke();
+
+        // Aurujuttude joonistamine
+        for(let i = 0; i < aurudeArv; i++){
+
+          let ax = x + (40 + i * 30) * suurus;
+
+          g.beginPath();
+          g.moveTo(ax, y - 10 * suurus);
+          g.lineTo(ax - 10 * suurus, y - 30 * suurus);
+          g.lineTo(ax, y - 50 * suurus);
+          g.stroke();
+
+        }
       }
 
       function joonista(){
 
         g = tahvel.getContext("2d");
 
-	        // Teeme kolm erinevat kohvitassi
-        kohvitass(30, 100, 0.6, "pink");
-        kohvitass(130, 80, 0.8, "lightblue");
-        kohvitass(260, 120, 0.5, "orange");
+        // Joonistame erinevad kohvitassid
+        kohvitass(30, 150, 0.6, "pink", 2);
+        kohvitass(200, 120, 0.8, "lightblue", 3);
+        kohvitass(400, 170, 0.5, "orange", 4);
 
       }
     </script>
   </head>
 
   <body onload="joonista()">
-    <h1>Kohvitassid</h1>
+    <h1>Kohvitassid auruga</h1>
 
-    <canvas id="tahvel" width="500" height="300">
+    <canvas id="tahvel" width="650" height="350">
     </canvas>
   </body>
 </html>
