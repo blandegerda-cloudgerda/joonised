@@ -1,5 +1,5 @@
 
 x,y,suurus,varv,auruarv
 30,150,2,pink,2
-220,120,4,purple,3
-430,170,8,orange,4
+220,120,1,purple,3
+430,170,0.5,orange,4
