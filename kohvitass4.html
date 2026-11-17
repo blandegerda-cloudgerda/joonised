@@ -1,0 +1,67 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Kohvitassid andmete põhjal</title>
+</head>
+<body onload="joonista()">
+
+<canvas id="tahvel" width="650" height="400" style="border:1px solid black;"></canvas>
+
+<script>
+let g;
+
+// Kohvitasside andmed
+let kohviandmed = [
+    { x: 30, y: 150, suurus: 0.6, varv: "pink", aurudeArv: 2 },
+    { x: 220, y: 120, suurus: 0.8, varv: "lightblue", aurudeArv: 3 },
+    { x: 430, y: 170, suurus: 0.5, varv: "orange", aurudeArv: 4 }
+];
+
+function joonista() {
+    let tahvel = document.getElementById("tahvel");
+    g = tahvel.getContext("2d");
+
+    for (let i = 0; i < kohviandmed.length; i++) {
+        let d = kohviandmed[i];
+
+        kohvitass(d.x, d.y, d.suurus, d.varv, d.aurudeArv);
+    }
+}
+
+function kohvitass(x, y, suurus, varv, aurudeArv) {
+    // Tassi keha
+    g.fillStyle = varv;
+    g.fillRect(x, y, 100 * suurus, 120 * suurus);
+
+    // Sang
+    g.beginPath();
+    g.arc(x + 100 * suurus, y + 60 * suurus, 25 * suurus, -Math.PI / 2, Math.PI / 2);
+    g.strokeStyle = varv;
+    g.lineWidth = 8 * suurus;
+    g.stroke();
+
+    // Kohvi pind
+    g.beginPath();
+    g.arc(x + 50 * suurus, y, 50 * suurus, 0, Math.PI);
+    g.fillStyle = "#5c3825";
+    g.fill();
+
+    // Aur
+    g.strokeStyle = "gray";
+    g.lineWidth = 2;
+
+    for (let i = 0; i < aurudeArv; i++) {
+        let ax = x + (25 + i * 20) * suurus;
+
+        g.beginPath();
+        g.moveTo(ax, y - 10 * suurus);
+        g.lineTo(ax + 5 * suurus, y - 25 * suurus);
+        g.lineTo(ax, y - 40 * suurus);
+        g.stroke();
+    }
+}
+</script>
+
+</body>
+</html>
