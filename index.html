@@ -1,22 +1,26 @@
 
+
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Kohvitassid andmete põhjal</title>
+    <title>Kohvitassid JSON-andmete põhjal</title>
 </head>
-<body onload="joonista()">
+<body onload="loeAndmed()">
 
 <canvas id="tahvel" width="650" height="400" style="border:1px solid black;"></canvas>
 
 <script>
 let g;
+let kohviandmed = [];
 
-// Kohvitasside andmed
-let kohviandmed = [
-    { x: 30, y: 150, suurus: 0.6, varv: "pink", aurudeArv: 2 },
-    { x: 220, y: 120, suurus: 0.8, varv: "lightblue", aurudeArv: 3 },
-    { x: 430, y: 170, suurus: 0.5, varv: "orange", aurudeArv: 4 }
-];
+function loeAndmed() {
+    fetch("kohviandmed.json")
+        .then(vastus => vastus.json())
+        .then(andmed => {
+            kohviandmed = andmed;
+            joonista();
+        });
+}
 
 function joonista() {
     let tahvel = document.getElementById("tahvel");
@@ -24,30 +28,25 @@ function joonista() {
 
     for (let i = 0; i < kohviandmed.length; i++) {
         let d = kohviandmed[i];
-
         kohvitass(d.x, d.y, d.suurus, d.varv, d.aurudeArv);
     }
 }
 
 function kohvitass(x, y, suurus, varv, aurudeArv) {
-    // Tassi keha
     g.fillStyle = varv;
     g.fillRect(x, y, 100 * suurus, 120 * suurus);
 
-    // Sang
     g.beginPath();
     g.arc(x + 100 * suurus, y + 60 * suurus, 25 * suurus, -Math.PI / 2, Math.PI / 2);
     g.strokeStyle = varv;
     g.lineWidth = 8 * suurus;
     g.stroke();
 
-    // Kohvi pind
     g.beginPath();
     g.arc(x + 50 * suurus, y, 50 * suurus, 0, Math.PI);
     g.fillStyle = "#5c3825";
     g.fill();
 
-    // Aur
     g.strokeStyle = "gray";
     g.lineWidth = 2;
 
@@ -65,4 +64,3 @@ function kohvitass(x, y, suurus, varv, aurudeArv) {
 
 </body>
 </html>
-
