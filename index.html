@@ -1,50 +1,75 @@
 
 
+
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Kohvitassid CSV-andmete põhjal</title>
+    <title>Kohvitasside lisamine</title>
 </head>
-<body onload="loeAndmed()">
+<body onload="joonista()">
+
+<h2>Minu kohvitassid</h2>
+
+<label>Vali kohvitassi värv:</label>
+<select id="varv">
+    <option value="pink">Roosa</option>
+    <option value="purple">Lilla</option>
+    <option value="orange">Oranž</option>
+    <option value="lightblue">Helesinine</option>
+    <option value="green">Roheline</option>
+</select>
+
+<br><br>
+
+<label>Vali kohvitassi suurus:</label>
+<select id="suurus">
+    <option value="0.5">Väike</option>
+    <option value="0.8">Keskmine</option>
+    <option value="1">Suur</option>
+</select>
+
+<br><br>
+
+<button onclick="lisaTass()">Lisa kohvitass</button>
+
+<br><br>
 
 <canvas id="tahvel" width="650" height="400" style="border:1px solid black;"></canvas>
 
 <script>
 let g;
-let kohviandmed = [];
 
-function loeAndmed() {
-    fetch("kohviandmed.csv")
-        .then(vastus => vastus.text())
-        .then(tekst => {
-            let read = tekst.trim().split("\n");
-
-            for (let i = 1; i < read.length; i++) {
-                let osad = read[i].split(",");
-
-                let tass = {
-                    x: Number(osad[0]),
-                    y: Number(osad[1]),
-                    suurus: Number(osad[2]),
-                    varv: osad[3],
-                    aurudeArv: Number(osad[4])
-                };
-
-                kohviandmed.push(tass);
-            }
-
-            joonista();
-        });
-}
+let kohviandmed = [
+    { x: 30, y: 150, suurus: 0.6, varv: "pink", aurudeArv: 2 },
+    { x: 220, y: 120, suurus: 0.8, varv: "lightblue", aurudeArv: 3 }
+];
 
 function joonista() {
     let tahvel = document.getElementById("tahvel");
     g = tahvel.getContext("2d");
 
+    g.clearRect(0, 0, 650, 400);
+
     for (let i = 0; i < kohviandmed.length; i++) {
         let d = kohviandmed[i];
         kohvitass(d.x, d.y, d.suurus, d.varv, d.aurudeArv);
     }
+}
+
+function lisaTass() {
+    let varv = document.getElementById("varv").value;
+    let suurus = Number(document.getElementById("suurus").value);
+
+    let uusTass = {
+        x: 30 + kohviandmed.length * 150,
+        y: 200,
+        suurus: suurus,
+        varv: varv,
+        aurudeArv: 3
+    };
+
+    kohviandmed.push(uusTass);
+    joonista();
 }
 
 function kohvitass(x, y, suurus, varv, aurudeArv) {
@@ -76,3 +101,7 @@ function kohvitass(x, y, suurus, varv, aurudeArv) {
     }
 }
 </script>
+
+</body>
+</html>
+
